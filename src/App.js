@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Burger from './components/Burger/Burger'
-import Ingredient from "./components/Ingredient/Ingredient";
+import Ingredient, { INGREDIENTS } from "./components/Ingredient/Ingredient";
+
 
 class App extends Component {
   state = {
@@ -12,21 +13,25 @@ class App extends Component {
           {name: 'Salad', count: 1},
           {name: 'Bacon', count: 1}
       ],
-      totalAmount: 0
+      totalAmount: 125
   };
 
   increaseIngr = index => {
       const ingredients = this.state.ingredients;
       ingredients[index].count++;
-      this.setState(ingredients);
+      let totalAmount = this.state.totalAmount;
+      totalAmount += INGREDIENTS[index].price;
+      this.setState({ingredients, totalAmount});
   };
 
   decreaseIngr = index => {
       const ingredients = this.state.ingredients;
+      let totalAmount = this.state.totalAmount;
 
       if (ingredients[index].count > 0) {
+          totalAmount -= INGREDIENTS[index].price;
           ingredients[index].count--;
-          this.setState(ingredients);
+          this.setState({ingredients, totalAmount});
       }
   };
 
@@ -50,6 +55,7 @@ class App extends Component {
           <div className="col">
               <Burger
                 data={this.state.ingredients}
+                totalAmount={this.state.totalAmount}
               />
           </div>
       </div>

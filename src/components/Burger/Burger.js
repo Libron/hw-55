@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { INGREDIENTS } from "../Ingredient/Ingredient";
 import './Burger.css';
 
 class Burger extends Component {
     render() {
         const ingredients = [];
-        let totalCost = 20;
 
-        this.props.data.forEach((item, index) => {
+        this.props.data.forEach(item => {
             for (let i = 0; i < item.count; i++) {
-                totalCost += INGREDIENTS[index].price;
                 ingredients.push({name: item.name});
             }
         });
@@ -24,10 +21,9 @@ class Burger extends Component {
                     <div className={item.name} key={index}> </div>
                 ))}
                 <div className="BreadBottom"> </div>
-                <p>Общая стоимость: {totalCost} сом</p>
+                <p>Общая стоимость: {this.props.totalAmount} сом</p>
             </div>
         );
     }
 }
-
 export default Burger;
